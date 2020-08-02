@@ -1,0 +1,85 @@
+{
+   // Use IntelliSense to find out which attributes exist for C# debugging
+   // Use hover for the description of the existing attributes
+   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+   "version": "0.2.0",
+   "configurations": [
+   {
+       "name": "PowerShell Attach Interactive Session Runspace",
+       "type": "PowerShell",
+       "request": "attach",
+       "processId": "current"
+   },
+   {
+       "name": "PowerShell Launch Script",
+       "type": "PowerShell",
+       "request": "launch",
+       "script": "${workspaceFolder}/ContentReactor/Audio/Test.ps1",
+       "cwd": "${workspaceFolder}/ContentReactor/Audio"
+   },
+       {
+           "name": "PowerShell Launch Current File",
+           "type": "PowerShell",
+           "request": "launch",
+           "script": "${file}",
+           "cwd": "${file}"
+       },
+   {
+       "name": "Test Audio Build",
+       "type": "PowerShell",
+       "request": "launch",
+       "script": "${workspaceFolder}/ContentReactor/audio/audio.test.ps1",
+       "cwd": "${workspaceFolder}/ContentReactor/audio/"
+   },
+       {
+           "name": ".NET Core Attach",
+           "type": "coreclr",
+           "request": "attach",
+           "processId": "${command:pickProcess}"
+       },
+       {
+           "name": "web-server",
+           "type": "coreclr",
+           "request": "launch",
+           "program": "${workspaceFolder}/web/src/ContentReactor.Web/ContentReactor.Web.Server/bin/Debug/netcoreapp2.1/ContentReactor.Web.Server.dll",
+           "args": [],
+           "cwd": "${workspaceFolder}/web/src/ContentReactor.Web/ContentReactor.Web.Server",
+           "stopAtEntry": false,
+           "serverReadyAction": {
+               "action": "openExternally",
+               "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+           },
+           "env": {
+               "ASPNETCORE_ENVIRONMENT": "Development",
+               "FUNCTION_API_PROXY_ROOT": "https://toco-proxy-api.azurewebsites.net/"
+           }
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "web-app",
+            "url": "https://localhost:5001",
+            "webRoot": "${workspaceFolder}/web/src/ContentReactor.Web/ContentReactor.Web.App"
+        },
+        {
+            "name": "launch-categories",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-categories",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/categories/src/ContentReactor.Categories/ContentReactor.Categories.Tests/bin/Debug/netcoreapp2.0/ContentReactor.Categories.Tests.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/categories/src/ContentReactor.Categories/ContentReactor.Categories.Tests",
+            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ],
+    "compounds": [
+        {
+          "name": "web-run",
+          "configurations": ["web-server", "web-app"]
+        }
+    ]
+}
