@@ -14,8 +14,9 @@ function Start-ApplicationJob
     $importFunctionPath = (Join-Path $PSScriptRoot "Import-PrivateFunctions.ps1")
 
     Start-ThreadJob -Name "rt-Service" -ScriptBlock {
-        $VerbosePreference = $args[3]
+        $VerbosePreference = "SilentlyContinue"
         . $args[4]
+        $VerbosePreference = $args[3]
         Start-Application `
             -Location $args[0] `
             -Port $args[1] `
